@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,12 +13,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $modulos = (object)[
-            ['name'=>'user','title'=>''],
-            ['name'=>'role','title'=>''],
-            ['name'=>'permission','title'=>''],
-        ];
-        return view('admin.index', ['title'=>"Reliance", 'modulos'=>$modulos]);
+        //
     }
 
     /**

@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-   <div class="container">
     <div class="row">
-        @foreach ($modulos as $m)
+        <div class="col s12">
+            @foreach ($modulos as $m)
             <div class="col s12 m3 l3 ">
                 <div class="card blue-grey darken-1 ">
                     <div class="card-content white-text card-admin valign-wrapper">
@@ -15,6 +15,6 @@
                 </div>
             </div>
         @endforeach
-      </div>
-   </div>
+        </div>
+    </div>
 @endsection

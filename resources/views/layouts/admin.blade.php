@@ -1,81 +1,58 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>ePymes | Admin</title>
-
-    <!-- Scripts -->
-
-    <!--script src="{{ asset('js/app.js') }}"></script-->
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    @yield('styles')
-  
-
-</head>
-<body>
-    
-   <nav>
-    <div class="nav-wrapper">
-        @isset($title)
-            <a href="#" class="brand-logo center">{{ $title }}</a>
-        @endisset
-        
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="#" data-target="slide-out" class="sidenav-trigger" style="display:block;"><i class="material-icons">menu</i></a></li>
-          </ul>
-           
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li>
-                <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();">
-                          Cerrar sesion
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{{ asset('/css/materialize.min.css') }}" media="screen,projection" />
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        @yield('css')
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name', 'Reliance') }}</title>
+    </head>
+    <body class="grey lighten-4">
+        <header>
+                <nav class="navbar  white">
+                    <div class="nav-wrapper">
+                        <span class="brand-logo center grey-text text-darken-1 ">
+                            @isset($title)
+                                {{ $title }}
+                            @else
+                                Reliance
+                            @endisset
+                        </span>
+                        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
+                    </div>
+                </nav>
+        </header>
+        <ul class="sidenav sidenav-fixed blue darken-2" id="slide-out">
+            <li>
+                <div class="navbar-fixed">
+                    <nav class=" navbar blue darken-4">
+                        <div class="nav-wrapper"><a href="#" class="brand-logo whithe-text center">
+                            Reliance
+                        </a>
+                        </div>
+                    </nav>
+                </div>
+            </li>
+            <li>
+                <a class="white-text" class="waves-effect" href="{{ route('user.index') }}">
+                    <i class="material-icons white-text">group</i>
+                    User
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-        </li>
+            </li>
         </ul>
-      </div>
-   
-    
-
-   </nav>
-
-    <ul id="slide-out" class="sidenav">
-        <h3 class="center-align" style="color:#006064;">e-PYMES</h3>
-        <li><a href="{{ route('admin.index') }}"><i class="material-icons">home</i>Inicio</a></li>
-        <li><a href="{{ route('empresa.index') }}"><i class="material-icons">cloud</i>Empresas</a></li>
-        <li><a href="{{ route('categoria.index') }}">Categorias</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Sugerencias</a></li>
-        <li><a class="waves-effect" href="#!">Productos sugeridos</a></li>
-      </ul>    
-    <div class="main">
-        @yield('content')
-    </div>
-    <script src="{{ asset('js/vue.js') }}"></script>
-    <script src="{{ asset('js/axios.min.js') }}"></script>
-    <script src="{{ asset('js/materialize.min.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-        });
-    </script>
-    @yield('scripts')
-</body>
+        <main id="app">
+            @yield('content')
+        </main>
+        <!--JavaScript-->
+        <script src="{{ asset('/js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jq.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/initmz.js') }}"></script>
+        @yield('scripts')
+    </body>
 </html>
