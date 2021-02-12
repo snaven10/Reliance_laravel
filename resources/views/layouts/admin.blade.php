@@ -68,7 +68,7 @@
         @yield('content')
     </div>
     <script src="{{ asset('js/vue.js') }}"></script>
-    <script src="{{ asset('js/axios.js') }}"></script>
+    <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/materialize.min.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

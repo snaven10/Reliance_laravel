@@ -17,8 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+//index de administracion
+Route::get('admin', [AdminController::class, 'index'])
+        ->name('admin.index');
+Route::middleware(['auth'])->group(function(){
+    //rutas de administracion
+    	//index de administracion
+	//Route::get('admin', 'AdminController@index')
+   // ->name('admin.index')
+    //->middleware("permission:admin.home");
+});
 require __DIR__.'/auth.php';
