@@ -1,0 +1,49 @@
+.upper{
+    text-transform: uppercase;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.card-admin{
+    height: 130px;
+    overflow-x: auto;
+}
+.card-form{
+    min-height: 340px;
+    margin-top: 40px;
+}
+.panel-form{
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: #006064;
+    z-index: 0;
+}
+.alert{
+    width: 100%;
+    padding: 2%;
+    margin: 8px;
+    border-radius: 6px;
+}
+.icon-container{
+    height: 200px;
+    overflow-y: auto;
+}
+.contentIcons{
+    display: inline-block;
+    width: 60px;
+    height:60px;
+    margin:10px;
+    overflow: hidden;
+    
+}
+.red-text{
+    font-style: italic;
+    color: #c62828;
+}
+.btnAlertRemove{
+    margin-top: -5px;
+    color: #fcfcfc;
+}
