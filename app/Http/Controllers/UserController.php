@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -11,9 +12,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $table = 'user';
     public function index()
     {
-        //
+        $users = DB::table('users')
+            ->leftJoin('role_user','users.id','=','role_user.user_id')
+            ->select('users.*','role_user.role_id','role_user.id as userrol_id')
+            ->where('tipo_usuario','!=','700')
+            ->paginate(10);
+        return view($this->table.'.index', [
+            'table' =>  $this->table,
+            'title'=>'Listado de usurios',
+            'rol'=> rol::all(),
+            'data'=> $users
+            ]);
     }
 
     /**
