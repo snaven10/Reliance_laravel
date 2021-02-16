@@ -1,0 +1,40 @@
+header,
+main,
+footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+    header,
+    main,
+    footer {
+        padding-left: 0;
+    }
+}
+
+.mennu {
+    height: 20vh;
+    z-index: 999;
+}
+
+.contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopicon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconshop {
+    font-size: 40px;
+}
+
+.cate {
+    font-size: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
