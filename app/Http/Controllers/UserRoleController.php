@@ -2,33 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $table = 'user';
     public function index()
     {
-        $users = DB::table('users')
-            ->leftJoin('model_has_roles','users.id','=','model_has_roles.model_id')
-            ->select('users.*','model_has_roles.role_id')
-            ->where('name','!=','SNAVEN')
-            ->paginate(10);
-        return view($this->table.'.index', [
-            'table' =>  $this->table,
-            'title'=>'Listado de usurios',
-            'rol'=> Role::all()->where('id','>','1'),
-            'data'=> $users
-            ]);
+        //
     }
 
     /**
@@ -38,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view($this->table.'.create', ['table' =>  $this->table, 'title'=>'Agregar Usurio']);
+        //
     }
 
     /**
@@ -47,15 +33,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        $obj = new User();
-        $obj->name = $validated['name'];
-        $obj->email = $validated['email'];
-        $obj->password = $validated['password'];
-        $e = $obj->save();
-        return redirect()->route($this->table.'.index')->with(($e)?'info':'danger',($e)?'Guardado con exito':'Ocurrio un problema al guardar el usuario intente de nuevo.');
+        $user = User::find($request->user);
+        $user->assignRole($request->role);
+        $mesages = array(
+            'tipo'=>'info',
+            'mensaje'=>'rol asignado con exito',
+        );
+        return $mesages;
     }
 
     /**
@@ -87,9 +73,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = User::find($request->user);
+        $user->syncRoles([$request->role]);
+        $mesages = array(
+            'tipo'=>'info',
+            'mensaje'=>'Se Cambio de rol con exito',
+        );
+        return $mesages;
     }
 
     /**
@@ -98,8 +90,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$role)
     {
-        //
+        $user = User::find($id);
+        $user->removeRole($role);
+        $mesages = array(
+            'tipo'=>'info',
+            'mensaje'=>'Se elimo la asigancion de un rol correctamente',
+        );
+        return $mesages;
     }
 }

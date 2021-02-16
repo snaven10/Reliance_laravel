@@ -6,17 +6,16 @@
       <tr>
           <th>Nombre</th>
           <th>Email</th>
-          <th>Telefono</th>
-          @can($table.'.update')
-            <th>Roles</th>    
+          @can($table.'.userrole')
+            <th>Roles</th>
           @endcan
-          @can($table.'.update')
+          @can($table.'.newpss')
             <th>Restablecer</th>
           @endcan
           @can($table.'.update')
             <th>Editar</th>
           @endcan
-          @can($table.'.update')
+          @can($table.'.destroy')
             <th>Eliminar</th>
           @endcan
       </tr>
@@ -25,15 +24,14 @@
     <tbody>
       @foreach($data as $e)
       <tr>
-        <td>{{ $e->name }} {{ $e->lastname }}</td>
+        <td>{{ $e->name }}</td>
         <td>{{ $e->email }}</td>
-        <td>{{ $e->telefono }}</td>
-        @can($table.'.update')
+        @can($table.'.userrole')
           <th>
             <div class="input-field col s7">
               <select
                 name="role"
-                @change="onChange($event,{{$e->id}},{{$e->userrol_id}})">
+                @change="onChange($event,{{$e->id}},{{$e->role_id}})">
                 <option value="0">Sin Rol</option>
                 @foreach($rol as $rl)
                   <option value="{{ $rl->id }}" {{ ($e->role_id==$rl->id)?'selected':'' }} >{{ $rl->name }}</option>
@@ -42,12 +40,12 @@
             </div>
           </th>
         @endcan
-        @can($table.'.update')
+        @can($table.'.newpss')
         <th>
           <form action="{{ route($table.'.newpss', ['id' => $e->id ]) }}" method="post" class="frmNpas">
             @csrf
             @method('PUT')
-            <button 
+            <button
                 class="btn-flat blue-text"
                 type="submit"
                 tag="{{ $e->name }}">
@@ -59,12 +57,12 @@
         @can($table.'.update')
         <th><a href="{{ route($table.'.edit', ['user' => $e->id ]) }}"><i class="material-icons">update</i></a></th>
         @endcan
-        @can($table.'.update')
+        @can($table.'.destroy')
         <th>
           <form action="{{ route($table.'.destroy', ['user' => $e->id ]) }}" method="post" class="frmDelete">
             @csrf
             @method('DELETE')
-            <button 
+            <button
                 class="btn-flat red-text btnDelete"
                 type="button"
                 tag="{{ $e->name }}">
@@ -76,8 +74,8 @@
       </tr>
       @endforeach
     </tbody>
-  </table> 
-  {!! $data->render() !!}   
+  </table>
+  {!! $data->render() !!}
 </div>
 @endsection
 @section('scripts-list')
@@ -86,56 +84,50 @@
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
       });
-    var mes = new Vue({
-      el:'.alrt',
-      data: {
-        tipo: null,
-        message: null,
-        classinfo: true,
-        classdanger: false
-      },
-      methods:{
-        getdelete:function() {
-          this.message = null;
-        }
-      }
-    });
     new Vue({
       el:'#userList',
       data: {
         tk: "{{ csrf_token() }}"
       },
       methods:{
-        onChange:function(event,iduser,iduserrol) {
+        onChange:function(event,iduser,role_id) {
           var datoselect = event.target.value;
+          //console.log(event.originalTarget.options[2].attributes.selected.value);
           if (datoselect == 0) {
-            if (iduserrol) {
+            var role;
+            var info = event.originalTarget.options;
+            for (var i = 0; i < info.length; i++) {
+              if (info[i].attributes.hasOwnProperty('selected')) {
+                role = info[i].label;
+              }
+            }
+            if (role_id) {
               var params = {
                 _token  : this.tk,
-                _method  : 'PUT',
+                _method  : 'DELETE',
               };
-              url = "destroy/users/rols/"+iduserrol;
+              url = "destroy/users/"+iduser+"/role/"+role;
               this.api(url, params);
             }
           }else if(datoselect > 0){
-            if (iduserrol) {
+            var role = event.target.options[event.target.selectedIndex].text;
+            if (role_id) {
               var params = {
                 _token  : this.tk,
                 _method  : 'PUT',
-                role : datoselect,
+                role : role,
                 user : iduser,
-                userrol : iduserrol,
               };
-              url = "{{ route('roluser.update') }}";
+              url = "{{ route('roleuser.update') }}";
               this.api(url, params);
             }else{
+              var role = event.target.options[event.target.selectedIndex].text;
               var params = {
                 _token  : this.tk,
-                role : datoselect,
+                role : role,
                 user : iduser,
-                userrol : iduserrol,
               };
-              url = "{{ route('roluser.store') }}";
+              url = "{{ route('roleuser.store') }}";
               this.api(url, params);
             }
           }
@@ -143,20 +135,24 @@
         api:function(url, param){
             axios.post(url, param)
             .then(response => {
-                mes.tipo = response.data.tipo;
-                if(mes.tipo=='info'){
-                  mes.classinfo = true;
-                  mes.classdanger = false;
+                if(response.data.tipo=='info'){
+                  M.toast({
+                    html: response.data.mensaje,
+                    displayLength: 2000,
+                    classes: 'teal rounded'
+                  });
                 }else{
-                  mes.classinfo = false;
-                  mes.classdanger = true;
+                  M.toast({
+                    html: response.data.mensaje,
+                    displayLength: 2000,
+                    classes: 'red rounded'
+                  });
                 }
-                mes.message = response.data.mensaje;
             }).catch(e => {
                 console.log(e);
             });
         },
       }
-    })    
+    });
   </script>
 @endsection
