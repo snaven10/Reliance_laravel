@@ -13,7 +13,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $modulos = (object)[
+            ['name'=>'user','title'=>''],
+            ['name'=>'role','title'=>''],
+            ['name'=>'permission','title'=>''],
+        ];
+        return view('admin.index', ['title'=>"Reliance", 'modulos'=>$modulos]);
     }
 
     /**

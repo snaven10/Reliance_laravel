@@ -1,88 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="{{ asset('/css/materialize.min.css') }}" media="screen,projection" />
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    @yield('css')
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'e-Pymes') }}</title>
+    <title>Reliance | Group</title>
+    <!-- Scripts -->
+    <!--script src="{{ asset('js/app.js') }}"></script-->
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
-
-<body class="grey lighten-4">
-    <header>
-            <nav class=" navbar  white">
-                <div class="nav-wrapper">
-                    <span class="brand-logo center grey-text text-darken-1 ">
-                        @isset($title)
-                            {{ $title }}
-                        @else
-                            e-Pymes
-                        @endisset
-                    </span>
-                    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
-                </div>       
-            </nav>
-    </header>
-    <ul class="sidenav sidenav-fixed blue darken-2" id="slide-out">
-        <li>
-            <div class="navbar-fixed">
-                <nav class=" navbar blue darken-4">
-                    <div class="nav-wrapper"><a href="{{ route('cliente.home') }}" class="brand-logo whithe-text center">
-                        
-                            e-PYMES
+<body>
+    <nav class="navbar grey darken-4">
+        <div class="nav-wrapper">
+            @isset($title)
+                <a href="#" class="brand-logo center">{{ $title }}</a>
+            @endisset
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="#" data-target="slide-out" class="sidenav-trigger" style="display:block;"><i class="material-icons">menu</i></a></li>
+            </ul>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                Cerrar sesion
                     </a>
-                    </div>
-                </nav>
-            </div>
-        </li>
-        @auth
-        <li><a class="white-text" href="{{ route('empresas.config') }}"><i class="material-icons white-text">account_circle</i>{{ Auth::user()->name }} {{ Auth::user()->lastname }}</a></li>
-        <li>
-            <a class="white-text" 
-                href="#!"
-                onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();">
-                    <i class="material-icons white-text">input</i>
-                    Cerrar Sesion
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </li>
-        @else
-        <li><a class="white-text" href="{{ route('login') }}"><i class="material-icons white-text">account_circle</i>Iniciar sesion</a></li>
-        @endauth
-        <li>
-            <div class="divider blue darken-4"></div>
-        </li>
-        <li><a class="white-text" class="waves-effect" href="{{ route('cliente.home') }}"><i class="material-icons white-text">card_travel</i><p>Inicio</p></a></li>
-        <li><a class="white-text" class="waves-effect" href="{{ route('servicios') }}"><i class="material-icons white-text">card_travel</i><p>Servicios</p></a></li>
-        @can('empresa')
-            <li><a class="white-text" class="waves-effect" href="{{ route('empresa.sucursal') }}"><i class="material-icons white-text">local_mall</i><p>Ajustes</p></a></li>
-            <li><a class="white-text" class="waves-effect" href="{{ route('pedidos.pedido') }}"><i class="material-icons white-text">local_shipping</i>Mis Pedidos</a></li>
-        @endcan
-        @can('cliente')
-            <li><a class="white-text" class="waves-effect" href="{{ route('cliente.car') }}"><i class="material-icons white-text">add_shopping_cart</i>Mi Carrito</a></li>
-        @endcan
-        <li><a class="white-text" class="waves-effect" href="{{ route('productopremiun.premiun') }}"><i class="material-icons white-text">redeem</i>Productos Premiun</a></li>
-
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <ul id="slide-out" class="sidenav">
+        <h3 class="center-align" style="color:#006064;">Reliance</h3>
+        <li><a href="{{ route('admin.index') }}"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a href="{{ route('user.index') }}"><i class="material-icons">account_circle</i>User</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Sugerencias</a></li>
+        <li><a class="waves-effect" href="#!">Productos sugeridos</a></li>
     </ul>
-    <main id="app">
+    <div class="main">
         @yield('content')
-    </main>
-      <!--JavaScript-->
-      <script src="{{ asset('/js/app.js') }}"></script>
-      <script type="text/javascript" src="{{ asset('js/jq.js') }}"></script>
-      <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-      <script type="text/javascript" src="{{ asset('js/initmz.js') }}"></script>
-      @yield('scripts')
-  </body>
-  
-  </html>
+    </div>
+    <script src="{{ asset('js/vue.js') }}"></script>
+    <script src="{{ asset('js/axios.min.js') }}"></script>
+    <script src="{{ asset('js/materialize.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
+    </script>
+    @yield('scripts')
+</body>
+</html>

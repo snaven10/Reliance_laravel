@@ -14,6 +14,7 @@ return [
     */
 
     'failed' => 'Las credenciales no coinciden',
+    'password' => 'La contraseña proporcionada es incorrecta.',
     'throttle' => 'Ha realizado muchos intentos. Por favor intente de nuevo en :seconds segundos.',
 
 ];

@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         //spatie
         Spatie\Permission\PermissionServiceProvider::class,
-
     ],
 
     /*
