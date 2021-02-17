@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -21,13 +23,22 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'name' => 'required|string|max:25|unique:users',
-            'email'=> 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
-        ];
+        if (Request::isMethod('POST')) {
+            $rules = [
+                'name' => 'required|string|max:25|unique:users',
+                'email'=> 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|confirmed|min:8',
+            ];
+        }
+        if(Request::isMethod('PUT')){
+            $rules = [
+                'name' => ['required','string','max:25',Rule::unique('users')->ignore($request->user)],
+                'email'=> ['required','string','email','max:255',Rule::unique('users')->ignore($request->user)],
+            ];
+        }
+        return $rules;
     }
 
     public function messages()

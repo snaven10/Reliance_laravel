@@ -77,7 +77,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = User::findOrFail($id);
+        return view($this->table.'.edit', [
+            'table' =>  $this->table,
+            'title'=>'Editar User',
+            'data'=> $obj
+        ]);
     }
 
     /**
@@ -87,9 +92,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $obj = User::find($id);
+        $obj->name = $validated['name'];
+        $obj->email = $validated['email'];
+        $e = $obj->save();
+        return redirect()->route($this->table.'.index')->with(($e)?'info':'danger',($e)?'Se edito un registro con exito. ':'Ocurrio un problema al editar el User intente de nuevo.');
     }
 
     /**
