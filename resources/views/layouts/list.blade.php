@@ -17,11 +17,13 @@
 					</div>
 				</form>
 			</div>
-			@can($table.'.create')
-				<div class="col s12">
-					<a href="{{ route($table.'.create') }}" class="btn"><i class="material-icons left">add</i> Agregar</a>
-				</div>
-			@endcan
+            @if ($table.'.create' != 'branch.create')
+                @can($table.'.create')
+                    <div class="col s12">
+                        <a href="{{ route($table.'.create') }}" class="btn"><i class="material-icons left">add</i> Agregar</a>
+                    </div>
+                @endcan
+            @endif
 			@if ((session('danger') && session('danger') != "") || (session('info') && session('info') != ""))
 				<script>
 					var mesages = "{{ (session('danger'))?session('danger'):session('info') }}";

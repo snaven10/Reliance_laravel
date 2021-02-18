@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class AdminController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $table = 'branch';
     public function index()
     {
-        $modulos = (object)[
-            ['name'=>'user','title'=>''],
-            ['name'=>'role','title'=>''],
-            ['name'=>'permission','title'=>''],
-            ['name'=>'branch','title'=>'Sucursales'],
-        ];
-        return view('admin.index', ['title'=>"Reliance", 'modulos'=>$modulos]);
+        $branchs = DB::table('branch_offices')
+                    ->select('branch_office','direction','matrix')->paginate(10);
+        return view($this->table.'.index', [
+            'table' =>  $this->table,
+            'title'=>'Listado de Sucursales',
+            'data'=> $branchs
+        ]);
     }
 
     /**

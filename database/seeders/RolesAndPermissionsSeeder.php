@@ -27,6 +27,14 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'user.newpss']);
         Permission::create(['name' => 'user.search']);
         Permission::create(['name' => 'user.destroy']);
+        //Sucursales
+        //User
+        Permission::create(['name' => 'branch.index']);
+        Permission::create(['name' => 'branch.create']);
+        Permission::create(['name' => 'branch.update']);
+        Permission::create(['name' => 'branch.newpss']);
+        Permission::create(['name' => 'branch.search']);
+        Permission::create(['name' => 'branch.destroy']);
         //Role
         Permission::create(['name' => 'role.index']);
         Permission::create(['name' => 'role.create']);

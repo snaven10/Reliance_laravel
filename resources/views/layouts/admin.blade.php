@@ -65,6 +65,12 @@
                     User
                 </a>
             </li>
+            <li>
+                <a class="white-text" class="waves-effect" href="{{ route('branch.index') }}">
+                    <i class="material-icons white-text">location_city</i>
+                    Sucursales
+                </a>
+            </li>
         </ul>
         <main id="app">
             @yield('content')
