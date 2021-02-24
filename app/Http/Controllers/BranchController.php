@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BranchRequest;
+use App\Models\Branch_office;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +18,7 @@ class BranchController extends Controller
     public function index()
     {
         $branchs = DB::table('branch_offices')
-                    ->select('branch_office','direction','matrix')->paginate(10);
+                    ->select('id','branch_office','direction','matrix')->paginate(10);
         return view($this->table.'.index', [
             'table' =>  $this->table,
             'title'=>'Listado de Sucursales',
@@ -40,9 +42,14 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BranchRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $branch = new Branch_office();
+        $branch->branch_office = $validated['branch_office'];
+        $branch->direction = $validated['direction'];
+        $e = $branch->save();
+        return redirect()->route($this->table.'.index')->with(($e)?'info':'danger',($e)?'Guardado con exito':'Ocurrio un problema al guardar el usuario intente de nuevo.');
     }
 
     /**
@@ -64,7 +71,12 @@ class BranchController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = Branch_office::find($id);
+        return view($this->table.'.edit', [
+            'table' =>  $this->table,
+            'title'=>'Editar Sucursal',
+            'data'=> $obj
+        ]);
     }
 
     /**

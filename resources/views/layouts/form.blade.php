@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     @endif
-                   @yield('form') 
+                   @yield('form')
                 </div>
                 </div>
             </div>

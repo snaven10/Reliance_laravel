@@ -44,7 +44,7 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo de attribute: es obligatorio.',
+            'name.required' => 'El campo :attribute es obligatorio.',
             'name.email' => 'El correo debe ser una dirección de correo electrónico válida.',
             'password.required' => 'La contraseña es obligatoria.',
             'password.confirmed' => 'La contraseña no coincide',

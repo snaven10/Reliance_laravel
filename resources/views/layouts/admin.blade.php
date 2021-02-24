@@ -59,18 +59,41 @@
                     Home
                 </a>
             </li>
-            <li>
-                <a class="white-text" class="waves-effect" href="{{ route('user.index') }}">
-                    <i class="material-icons white-text">group</i>
-                    User
-                </a>
-            </li>
-            <li>
-                <a class="white-text" class="waves-effect" href="{{ route('branch.index') }}">
-                    <i class="material-icons white-text">location_city</i>
-                    Sucursales
-                </a>
-            </li>
+            @can('user.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('user.index') }}">
+                        <i class="material-icons white-text">group</i>
+                        User
+                    </a>
+                </li>
+            @endcan
+
+            @can('branch.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('branch.index') }}">
+                        <i class="material-icons white-text">location_city</i>
+                        Sucursales
+                    </a>
+                </li>
+            @endcan
+
+            @can('supplier.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('location.index') }}">
+                        <i class="material-icons white-text">event_note</i>
+                        Estantes
+                    </a>
+                </li>
+            @endcan
+
+            @can('supplier.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('supplier.index') }}">
+                        <i class="material-icons white-text">local_shipping</i>
+                        Proveedores
+                    </a>
+                </li>
+            @endcan
         </ul>
         <main id="app">
             @yield('content')
@@ -87,6 +110,7 @@
         </div>
         <!--JavaScript-->
         <script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
         <script>

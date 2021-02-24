@@ -25,7 +25,7 @@ class CreatePricesTable extends Migration
             $table->foreign('branch_office_id')->references('id')->on('branch_offices');
             $table->bigInteger('supplier_id')->unsigned();
             $table->foreign('supplier_id')->references('id')->on('suppliers');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

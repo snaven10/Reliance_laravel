@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->bigInteger('location_id')->unsigned();
             $table->foreign('location_id')->references('id')->on('locations');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

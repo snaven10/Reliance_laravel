@@ -18,7 +18,7 @@ class CreateReplacementCodesTable extends Migration
             $table->string('replacement_code');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

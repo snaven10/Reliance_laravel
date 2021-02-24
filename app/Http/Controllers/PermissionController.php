@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PermissionRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -11,9 +14,19 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $table = "permission";
     public function index()
     {
-        //
+        $data = DB::table('permissions')
+                ->select('*')
+                ->paginate(10);
+        return view(
+            $this->table.'.index',[
+                'table' =>  $this->table,
+                'title'=>'Listado de permisos',
+                'data'=> $data
+            ]
+        );
     }
 
     /**
@@ -23,7 +36,12 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            $this->table.'.create',[
+                'table' =>  $this->table,
+                'title'=>'Agregar permiso',
+            ]
+        );
     }
 
     /**
@@ -32,9 +50,12 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
-        //
+        $valid = $request->validated();
+        Permission::create(['name' => $valid['name']]);
+        return redirect()->route(
+            $this->table.'.index')->with('info','Guardado con exito');
     }
 
     /**
@@ -56,7 +77,14 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $obj = Permission::find($id);
+        return view(
+            $this->table.'.edit',[
+                'table' => $this->table,
+                'title'=> 'Editar permiso',
+                'data'=> $obj,
+            ]
+        );
     }
 
     /**

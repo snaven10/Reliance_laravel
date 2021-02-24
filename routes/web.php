@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,30 @@ Route::middleware(['auth'])->group(function(){
         ->name('admin.home')
         ->middleware("permission:admin.home");
 
+    //location
+        Route::post('location/search',[LocationController::class, 'search'])
+            ->name('location.search')
+            ->middleware("permission:location.search");
+        Route::get('location', [LocationController::class, 'index'])
+            ->name('location.index')
+            ->middleware("permission:location.index");
+        Route::get('location/create', [LocationController::class, 'create'])
+            ->name('location.create')
+            ->middleware("permission:location.create");
+        Route::post('location', [LocationController::class, 'store'])
+            ->name('location.store')
+            ->middleware("permission:location.create");
+        Route::get('location/{location}/edit',[LocationController::class, 'edit'])
+            ->name('location.edit')
+            ->middleware("permission:location.update");
+        Route::put('location/{location}',[LocationController::class, 'update'])
+            ->name('location.update')
+            ->middleware("permission:location.update");
+        Route::delete('location/{location}',[LocationController::class, 'destroy'])
+            ->name('location.destroy')
+            ->middleware("permission:location.destroy");
+    //end location
+
     //User
         Route::post('user/search',[UserController::class, 'search'])
             ->name('user.search')
@@ -63,6 +89,30 @@ Route::middleware(['auth'])->group(function(){
             ->name('user.newpss')
             ->middleware("permission:user.newpss");
     //end User
+
+    //suppliers
+        Route::post('supplier/search',[SupplierController::class, 'search'])
+            ->name('supplier.search')
+            ->middleware("permission:supplier.search");
+        Route::get('supplier', [SupplierController::class, 'index'])
+            ->name('supplier.index')
+            ->middleware("permission:supplier.index");
+        Route::get('supplier/create', [SupplierController::class, 'create'])
+            ->name('supplier.create')
+            ->middleware("permission:supplier.create");
+        Route::post('supplier', [SupplierController::class, 'store'])
+            ->name('supplier.store')
+            ->middleware("permission:supplier.create");
+        Route::get('supplier/{supplier}/edit',[SupplierController::class, 'edit'])
+            ->name('supplier.edit')
+            ->middleware("permission:supplier.update");
+        Route::put('supplier/{supplier}',[SupplierController::class, 'update'])
+            ->name('supplier.update')
+            ->middleware("permission:supplier.update");
+        Route::delete('supplier/{supplier}',[SupplierController::class, 'destroy'])
+            ->name('supplier.destroy')
+            ->middleware("permission:supplier.destroy");
+    //end suppliers
 
     //branch offices
         Route::post('branch/search',[BranchController::class, 'search'])
@@ -110,12 +160,27 @@ Route::middleware(['auth'])->group(function(){
     //end Role and User
 
     //Permission
+        Route::post('permission/search',[PermissionController::class, 'search'])
+            ->name('permission.search')
+            ->middleware("permission:supplier.search");
         Route::get('permission', [PermissionController::class, 'index'])
             ->name('permission.index')
             ->middleware("permission:permission.index");
         Route::get('permission/create', [PermissionController::class, 'create'])
             ->name('permission.create')
             ->middleware("permission:permission.create");
+        Route::post('permission', [PermissionController::class, 'store'])
+            ->name('permission.store')
+            ->middleware("permission:permission.create");
+        Route::get('permission/{permission}/edit',[PermissionController::class, 'edit'])
+            ->name('permission.edit')
+            ->middleware("permission:permission.update");
+        Route::put('permission/{permission}',[PermissionController::class, 'update'])
+            ->name('permission.update')
+            ->middleware("permission:permission.update");
+        Route::delete('permission/{permission}',[PermissionController::class, 'destroy'])
+            ->name('permission.destroy')
+            ->middleware("permission:permission.destroy");
     //end Permission
 
     //Permission Role

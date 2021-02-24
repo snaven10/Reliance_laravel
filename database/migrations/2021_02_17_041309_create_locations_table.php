@@ -15,8 +15,9 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->integer('shelvest');
-            $table->boolean('status');
+            $table->integer('code');
+            $table->string('shelvest');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

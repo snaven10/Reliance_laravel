@@ -28,13 +28,17 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'user.search']);
         Permission::create(['name' => 'user.destroy']);
         //Sucursales
-        //User
         Permission::create(['name' => 'branch.index']);
         Permission::create(['name' => 'branch.create']);
         Permission::create(['name' => 'branch.update']);
-        Permission::create(['name' => 'branch.newpss']);
         Permission::create(['name' => 'branch.search']);
         Permission::create(['name' => 'branch.destroy']);
+        //location
+        Permission::create(['name' => 'location.index']);
+        Permission::create(['name' => 'location.create']);
+        Permission::create(['name' => 'location.update']);
+        Permission::create(['name' => 'location.search']);
+        Permission::create(['name' => 'location.destroy']);
         //Role
         Permission::create(['name' => 'role.index']);
         Permission::create(['name' => 'role.create']);
@@ -46,10 +50,11 @@ class RolesAndPermissionsSeeder extends Seeder
         //User and Role
         Permission::create(['name'=>'user.userrole']);
         // create roles and assign created permissions
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
-        $user = User::create(['name' => 'SNAVEN','email' => 'frjsamuel@gmail.com','password'=>Hash::make('SENUFleumas1')]);
-        $user->assignRole('super-admin');
+        Role::create(['name' => 'super-admin']);
+        //$role = Role::create(['name' => 'super-admin']);
+        //$role->givePermissionTo(Permission::all());
+        //$user = User::create(['name' => 'SNAVEN','email' => 'frjsamuel@gmail.com','password'=>Hash::make('SENUFleumas1')]);
+        //$user->assignRole('super-admin');
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'vendedor']);

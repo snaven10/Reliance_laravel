@@ -17,8 +17,8 @@ class CreateBranchOfficesTable extends Migration
             $table->id();
             $table->string('branch_office');
             $table->string('direction');
-            $table->bigInteger('matrix');
-            $table->boolean('status');
+            $table->bigInteger('matrix')->default(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

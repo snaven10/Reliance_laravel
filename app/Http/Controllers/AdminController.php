@@ -18,6 +18,8 @@ class AdminController extends Controller
             ['name'=>'role','title'=>''],
             ['name'=>'permission','title'=>''],
             ['name'=>'branch','title'=>'Sucursales'],
+            ['name'=>'location','title'=>'Ubicacion de estantes'],
+            ['name'=>'supplier','title'=>'Proveedores'],
         ];
         return view('admin.index', ['title'=>"Reliance", 'modulos'=>$modulos]);
     }

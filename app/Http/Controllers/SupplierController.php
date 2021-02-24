@@ -2,33 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
-use App\Models\User;
+use App\Http\Requests\SupplierRequest;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $table = 'user';
+    protected $table = "supplier";
     public function index()
     {
-        $users = DB::table('users')
-            ->leftJoin('model_has_roles','users.id','=','model_has_roles.model_id')
-            ->select('users.*','model_has_roles.role_id')
-            ->where('name','!=','SNAVEN')
+        $data = DB::table('suppliers')
+            ->select('*')
             ->paginate(10);
-        return view($this->table.'.index', [
-            'table' =>  $this->table,
-            'title'=>'Listado de usurios',
-            'rol'=> Role::all()->where('id','>','1'),
-            'data'=> $users
-            ]);
+        return view(
+            $this->table.'.index',[
+                'table' =>  $this->table,
+                'title'=>'Listado de proveedores',
+                'data'=> $data
+            ]
+        );
+
     }
 
     /**
@@ -41,7 +40,7 @@ class UserController extends Controller
         return view(
             $this->table.'.create',[
                 'table' =>  $this->table,
-                'title'=>'Agregar Usurio'
+                'title'=>'Agregar proveedores',
             ]
         );
     }
@@ -52,15 +51,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(SupplierRequest $request)
     {
-        $validated = $request->validated();
-        $obj = new User();
-        $obj->name = $validated['name'];
-        $obj->email = $validated['email'];
-        $obj->password = $validated['password'];
+        $valid = $request->validated();
+        $obj = new Supplier();
+        $obj->name = $valid['name'];
+        $obj->nit_company = $valid['nit_company'];
+        $obj->phone = $valid['phone'];
+        $obj->addres = $valid['addres'];
+        $obj->email = $valid['email'];
         $e = $obj->save();
-        return redirect()->route($this->table.'.index')->with(($e)?'info':'danger',($e)?'Guardado con exito':'Ocurrio un problema al guardar el usuario intente de nuevo.');
+        return redirect()->route(
+            $this->table.'.index')->with(
+                ($e)?'info':'danger',
+                ($e)?'Guardado con exito':'Ocurrio un problema al guardar el usuario intente de nuevo.'
+        );
     }
 
     /**
@@ -82,12 +87,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $obj = User::findOrFail($id);
-        return view($this->table.'.edit', [
-            'table' =>  $this->table,
-            'title'=>'Editar User',
-            'data'=> $obj
-        ]);
+        $obj = Supplier::find($id);
+        return view(
+            $this->table.'.edit',[
+                'table' => $this->table,
+                'title'=> 'Editar proveedores',
+                'data'=> $obj,
+            ]
+        );
     }
 
     /**
@@ -97,18 +104,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(SupplierRequest $request, $id)
     {
-        $validated = $request->validated();
-        $obj = User::find($id);
-        $obj->name = $validated['name'];
-        $obj->email = $validated['email'];
+        $valid = $request->validated();
+        $obj = Supplier::find($id);
+        $obj->name = $valid['name'];
+        $obj->nit_company = $valid['nit_company'];
+        $obj->phone = $valid['phone'];
+        $obj->addres = $valid['addres'];
+        $obj->email = $valid['email'];
         $e = $obj->save();
         return redirect()->route(
             $this->table.'.index')->with(
                 ($e)?'info':'danger',
-                ($e)?'Se edito un registro con exito. ':'Ocurrio un problema al editar el User intente de nuevo.'
-            );
+                ($e)?'Se edito un registro con exito.':'Ocurrio un problema al editar el User intente de nuevo.'
+        );
     }
 
     /**
@@ -119,7 +129,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $obj = User::findOrFail($id);
+        $obj = Supplier::findOrFail($id);
         $e = $obj->delete();
         return redirect()->route(
             $this->table.'.index')->with(
