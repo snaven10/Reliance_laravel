@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('location', [LocationController::class, 'index'])
             ->name('location.index')
             ->middleware("permission:location.index");
+        Route::get('locations/{searchs?}', [LocationController::class, 'index'])
+            ->name('location.index.search')
+            ->middleware("permission:location.index");
         Route::get('location/create', [LocationController::class, 'create'])
             ->name('location.create')
             ->middleware("permission:location.create");
@@ -69,6 +72,9 @@ Route::middleware(['auth'])->group(function(){
             ->middleware("permission:user.search");
         Route::get('user', [UserController::class, 'index'])
             ->name('user.index')
+            ->middleware("permission:user.index");
+        Route::get('users/{searchs?}', [UserController::class, 'index'])
+            ->name('user.index.search')
             ->middleware("permission:user.index");
         Route::get('user/create', [UserController::class, 'create'])
             ->name('user.create')
@@ -97,6 +103,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('supplier', [SupplierController::class, 'index'])
             ->name('supplier.index')
             ->middleware("permission:supplier.index");
+        Route::get('suppliers/{searchs?}', [SupplierController::class, 'index'])
+            ->name('supplier.index.search')
+            ->middleware("permission:supplier.index");
         Route::get('supplier/create', [SupplierController::class, 'create'])
             ->name('supplier.create')
             ->middleware("permission:supplier.create");
@@ -121,6 +130,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('branch', [BranchController::class, 'index'])
             ->name('branch.index')
             ->middleware("permission:branch.index");
+        Route::get('branchs/{searchs?}', [BranchController::class, 'index'])
+            ->name('branch.index.search')
+            ->middleware("permission:branch.index");
         Route::get('branch/create', [BranchController::class, 'create'])
             ->name('branch.create')
             ->middleware("permission:branch.create");
@@ -141,6 +153,9 @@ Route::middleware(['auth'])->group(function(){
     //Role
         Route::get('role', [RoleController::class, 'index'])
             ->name('role.index')
+            ->middleware("permission:role.index");
+        Route::get('roles/{searchs?}', [RoleController::class, 'index'])
+            ->name('role.index.search')
             ->middleware("permission:role.index");
         Route::get('role/create', [RoleController::class, 'create'])
             ->name('role.create')
@@ -166,6 +181,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('permission', [PermissionController::class, 'index'])
             ->name('permission.index')
             ->middleware("permission:permission.index");
+        Route::get('permissions/{searchs?}', [PermissionController::class, 'index'])
+            ->name('permission.index.search')
+            ->middleware("permission:permission.index");
         Route::get('permission/create', [PermissionController::class, 'create'])
             ->name('permission.create')
             ->middleware("permission:permission.create");
@@ -186,6 +204,9 @@ Route::middleware(['auth'])->group(function(){
     //Permission Role
         Route::get('permissionrole', [PermissionRoleController::class, 'index'])
             ->name('permissionrole.index')
+            ->middleware("permission:permissionrole.index");
+        Route::get('permissionroles/{searchs?}', [PermissionRoleController::class, 'index'])
+            ->name('permissionrole.index.search')
             ->middleware("permission:permissionrole.index");
         Route::get('permissionrole/create', [PermissionRoleController::class, 'create'])
             ->name('permissionrole.create')

@@ -1,7 +1,7 @@
 @extends('layouts.list')
 @section('list')
     <div id="userList">
-        <table>
+        <table class="responsive-table highlight">
             <thead>
                 <tr>
                     <th>Nombre proveedor</th>

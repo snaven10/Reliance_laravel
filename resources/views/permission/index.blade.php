@@ -1,11 +1,11 @@
 @extends('layouts.list')
 @section('list')
-    <table>
+    <table class="responsive-table highlight">
         <thead>
             <tr>
                 <th>Nombre</th>
                 @can($table . '.update')
-                    <th>Editar</th>
+                    <!--<th>Editar</th>-->
                 @endcan
                 @can($table . '.destroy')
                     <th>Eliminar</th>
@@ -18,8 +18,8 @@
                 <tr>
                     <td>{{ $e->name }}</td>
                     @can($table . '.update')
-                        <th><a href="{{ route($table . '.edit', ['permission' => $e->id]) }}"><i
-                                    class="material-icons">update</i></a></th>
+                        <!--<th><a href="{{ route($table . '.edit', ['permission' => $e->id]) }}"><i
+                                                class="material-icons">update</i></a></th>-->
                     @endcan
                     @can($table . '.destroy')
                         <th>

@@ -68,6 +68,24 @@
                 </li>
             @endcan
 
+            @can('role.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('role.index') }}">
+                        <i class="material-icons white-text">group</i>
+                        role
+                    </a>
+                </li>
+            @endcan
+
+            @can('permission.index')
+                <li>
+                    <a class="white-text" class="waves-effect" href="{{ route('permission.index') }}">
+                        <i class="material-icons white-text">group</i>
+                        permission
+                    </a>
+                </li>
+            @endcan
+
             @can('branch.index')
                 <li>
                     <a class="white-text" class="waves-effect" href="{{ route('branch.index') }}">
@@ -110,7 +128,7 @@
         </div>
         <!--JavaScript-->
         <script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/v-mask.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
         <script>

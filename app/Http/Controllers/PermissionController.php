@@ -15,20 +15,39 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $table = "permission";
-    public function index()
+    public function index($search = "")
     {
         $data = DB::table('permissions')
                 ->select('*')
-                ->paginate(10);
+                ->paginate(5);
+        if ($search == "")
+            return view(
+                $this->table.'.index',[
+                    'table' =>  $this->table,
+                    'title'=>'Listado de permisos',
+                    'searchs' => false,
+                    'data'=> $data
+                ]
+            );
         return view(
-            $this->table.'.index',[
+            $this->table.'.search',[
                 'table' =>  $this->table,
                 'title'=>'Listado de permisos',
+                'searchs' => false,
                 'data'=> $data
             ]
         );
     }
 
+    public function search(Request $r)
+    {
+        return view($this->table.'.search', [
+            'table' =>  $this->table,
+            'title' =>'Listado de permisos',
+            'search' => true,
+            'data'=> Permission::where('name', 'like', "%".$r->txtSearch."%")->take(5)->paginate(5)
+            ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -107,6 +126,6 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
